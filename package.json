@@ -1,0 +1,45 @@
+{
+    "name": "adonis-mongodb",
+    "version": "0.1.0",
+    "description": "AdonisJS Provider to use Mongodb",
+    "main": "index.js",
+    "scripts": {},
+    "husky": {
+        "hooks": {
+            "pre-commit": "eslint --fix . --ext .js .",
+            "pre-push": "eslint --fix . --ext .js ."
+        }
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/EduSantosBrito/adonis-mongodb.git"
+    },
+    "keywords": [
+        "adonis",
+        "adonisJS",
+        "mongodb",
+        "mongo"
+    ],
+    "author": "Eduardo Santos de Brito",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/EduSantosBrito/adonis-mongodb/issues"
+    },
+    "homepage": "https://github.com/EduSantosBrito/adonis-mongodb#readme",
+    "dependencies": {},
+    "devDependencies": {
+        "mongodb": "^3.3.5",
+        "@adonisjs/fold": "^4.0.9",
+        "eslint": "^6.1.0",
+        "eslint-config-airbnb-base": "^14.0.0",
+        "eslint-config-prettier": "^6.5.0",
+        "eslint-plugin-import": "^2.18.2",
+        "eslint-plugin-prettier": "^3.1.1",
+        "husky": "^3.0.9",
+        "prettier": "^1.19.1"
+    },
+    "peerDependencies": {
+        "@adonisjs/fold": "^4.0.9",
+        "mongodb": "^3.3.5"
+    }
+}
