@@ -10,8 +10,9 @@
 class AdonisMongodb {
     constructor({ Config, MongoClient }) {
         this.Config = Config;
-        const { host, port } = Config;
-        const url = `mongodb://${host}:${port}`;
+        this.host = this.Config.get(`mongodb.host`);
+        this.port = this.Config.get(`mongodb.port`);
+        const url = `mongodb://${this.host}:${this.port}`;
         const client = new MongoClient(url);
         this.Client = client;
     }
@@ -37,7 +38,6 @@ class AdonisMongodb {
      * @return
      */
     connect() {
-        const { host, port } = this.Config;
         if (this.isConnected()) {
             return this.Client;
         }
@@ -45,7 +45,7 @@ class AdonisMongodb {
             if (err) {
                 throw new Error(err);
             }
-            console.log(`Connected successfully to server ${host}:${port}`);
+            console.log(`Connected successfully to server ${this.host}:${this.port}`);
         });
         return this.Client;
     }
