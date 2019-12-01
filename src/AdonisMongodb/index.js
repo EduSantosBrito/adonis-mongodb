@@ -11,10 +11,14 @@ class AdonisMongodb {
     constructor({ Config, MongoClient }) {
         this.Config = Config;
         this.host = this.Config.get(`mongodb.host`);
+        console.log('DEBUG:: Configuration set :: HOST', this.host);
         this.port = this.Config.get(`mongodb.port`);
+        console.log('DEBUG:: Configuration set :: PORT', this.port);
         const url = `mongodb://${this.host}:${this.port}`;
         const client = new MongoClient(url);
         this.Client = client;
+        console.log('DEBUG:: Configuration set :: CLIENT', this.Client);
+        this.connect();
     }
 
     /**
