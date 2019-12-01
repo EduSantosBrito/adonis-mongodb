@@ -10,9 +10,10 @@
 class AdonisMongodb {
     constructor({ Config, MongoClient }) {
         this.Config = Config;
-        this.host = this.Config.get(`mongodb.host`);
-        this.port = this.Config.get(`mongodb.port`);
-        this.url = `mongodb://${this.host}:${this.port}`;
+        this.host = this.Config.get('mongodb.host');
+        this.port = this.Config.get('mongodb.port');
+        this.dbName = this.Config.get('mongodb.dbName');
+        this.url = `mongodb://${this.host}:${this.port}/${this.dbName}`;
         this.Client = MongoClient;
     }
 
@@ -38,15 +39,17 @@ class AdonisMongodb {
      */
     connect() {
         if (this.isConnected()) {
-            return this.Client;
+            console.log('Client is already connected, returning...');
+            return this.db;
         }
-        this.Client.connect(this.url, { useUnifiedTopology: true, useNewUrlParser: true }, err => {
+        this.Client.connect(this.url, { useUnifiedTopology: true, useNewUrlParser: true }, (err, db) => {
             if (err) {
                 throw new Error(err);
             }
             console.log(`Connected successfully to server ${this.host}:${this.port}`);
+            this.db = db;
         });
-        return this.Client;
+        return this.db;
     }
 
     /**
