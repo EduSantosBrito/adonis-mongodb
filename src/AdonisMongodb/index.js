@@ -13,8 +13,7 @@ class AdonisMongodb {
         this.host = this.Config.get(`mongodb.host`);
         this.port = this.Config.get(`mongodb.port`);
         this.url = `mongodb://${this.host}:${this.port}`;
-        const client = new MongoClient();
-        this.Client = client;
+        this.Client = MongoClient;
     }
 
     /**
