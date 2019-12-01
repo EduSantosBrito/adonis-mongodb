@@ -42,7 +42,7 @@ class AdonisMongodb {
             console.log('Client is already connected, returning...');
             return this.db;
         }
-        this.Client.connect(this.url, { useUnifiedTopology: true, useNewUrlParser: true }, (err, db) => {
+        this.Client.connect(this.url, { useNewUrlParser: true }, (err, db) => {
             if (err) {
                 throw new Error(err);
             }
