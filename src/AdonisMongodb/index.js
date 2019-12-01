@@ -25,7 +25,7 @@ class AdonisMongodb {
      * @return {Boolean}
      */
     isConnected() {
-        return !!this.Client && !!this.Client.topology && this.Client.topology.isConnected();
+        return !!this.db;
     }
 
     /**
