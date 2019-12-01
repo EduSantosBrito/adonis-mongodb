@@ -15,7 +15,6 @@ class AdonisMongodb {
         this.dbName = this.Config.get('mongodb.dbName');
         this.url = `mongodb://${this.host}:${this.port}/${this.dbName}`;
         this.Client = MongoClient;
-        this.connect();
     }
 
     /**

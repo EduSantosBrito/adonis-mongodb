@@ -8,6 +8,12 @@ class AdonisMongodbProvider extends ServiceProvider {
             return new (require('../src/AdonisMongodb'))({ Config, MongoClient });
         });
     }
+
+    boot() {
+        /** @type {import('../src/AdonisMongodb')} */
+        const Client = this.app.use('Brito/Mongodb');
+        Client.connect();
+    }
 }
 
 module.exports = AdonisMongodbProvider;
