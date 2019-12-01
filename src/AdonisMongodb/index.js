@@ -12,8 +12,8 @@ class AdonisMongodb {
         this.Config = Config;
         this.host = this.Config.get(`mongodb.host`);
         this.port = this.Config.get(`mongodb.port`);
-        const url = `mongodb://${this.host}:${this.port}`;
-        const client = new MongoClient(url, { useUnifiedTopology: true, useNewUrlParser: true });
+        this.url = `mongodb://${this.host}:${this.port}`;
+        const client = new MongoClient();
         this.Client = client;
     }
 
@@ -41,7 +41,7 @@ class AdonisMongodb {
         if (this.isConnected()) {
             return this.Client;
         }
-        this.Client.connect(err => {
+        this.Client.connect(this.url, err => {
             if (err) {
                 throw new Error(err);
             }
