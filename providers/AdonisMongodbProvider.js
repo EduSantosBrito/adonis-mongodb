@@ -1,5 +1,5 @@
-import { ServiceProvider } from '@adonisjs/fold';
-import { MongoClient } from 'mongodb';
+const { ServiceProvider } = require('@adonisjs/fold');
+const { MongoClient } = require('mongodb');
 
 class AdonisMongodbProvider extends ServiceProvider {
     register() {
@@ -10,4 +10,4 @@ class AdonisMongodbProvider extends ServiceProvider {
     }
 }
 
-export default AdonisMongodbProvider;
+module.exports = AdonisMongodbProvider;
