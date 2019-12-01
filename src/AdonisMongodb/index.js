@@ -13,7 +13,7 @@ class AdonisMongodb {
         this.host = this.Config.get('mongodb.host');
         this.port = this.Config.get('mongodb.port');
         this.dbName = this.Config.get('mongodb.dbName');
-        this.url = `mongodb://${this.host}:${this.port}/${this.dbName}`;
+        this.url = `mongodb://${this.host}:${this.port}`;
         this.Client = MongoClient;
     }
 
@@ -42,7 +42,7 @@ class AdonisMongodb {
             console.log('Client is already connected, returning...');
             return this.db;
         }
-        this.db = await this.Client.connect(this.url, { useNewUrlParser: true });
+        this.db = (await this.Client.connect(this.url, { useNewUrlParser: true })).db(this.dbName);
         return this.db;
     }
 
