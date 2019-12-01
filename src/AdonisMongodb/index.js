@@ -40,7 +40,7 @@ class AdonisMongodb {
         if (this.isConnected()) {
             return this.Client;
         }
-        this.Client.connect(this.url, err => {
+        this.Client.connect(this.url, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true }, err => {
             if (err) {
                 throw new Error(err);
             }
