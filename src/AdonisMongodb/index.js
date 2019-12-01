@@ -18,7 +18,6 @@ class AdonisMongodb {
         const client = new MongoClient(url);
         this.Client = client;
         console.log('DEBUG:: Configuration set :: CLIENT', this.Client);
-        this.connect();
     }
 
     /**
