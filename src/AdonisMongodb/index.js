@@ -122,15 +122,9 @@ class AdonisMongodb {
      * @param {Object} document
      */
     async createOrUpdate(collection, document) {
-        console.log('DEBUG:: document', document);
-        console.log('DEBUG:: document._id && !this.ObjectID.isValid(document._id)', document._id && !this.ObjectID.isValid(document._id));
-        console.log(
-            'DEBUG:: document._id && this.documentExists(collection, document._id)',
-            document._id && this.documentExists(collection, document._id),
-        );
         if (document._id && !this.ObjectID.isValid(document._id)) {
             throw new Error('Invalid ObjectId');
-        } else if (document._id && this.documentExists(collection, document._id)) {
+        } else if (document._id && (await this.documentExists(collection, document._id))) {
             return this.updateDocument(collection, document);
         } else {
             return this.createDocument(collection, document);
