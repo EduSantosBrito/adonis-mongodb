@@ -83,7 +83,7 @@ class AdonisMongodb {
      * @param {Object} document
      */
     async updateDocument(collection, document) {
-        await this.db.collection(collection).updateOne({ _id: document._id }, { $set: { document, updateOn: new Date() } });
+        await this.db.collection(collection).updateOne({ _id: document._id }, { $set: { document, updatedAt: new Date() } });
         return this.db.collection(collection).findOne({ _id: document._id });
     }
 
@@ -95,7 +95,7 @@ class AdonisMongodb {
      */
     async createDocument(collection, document) {
         const documentId = new this.ObjectID();
-        await this.db.collection(collection).insertOne({ ...document, createOn: new Date(), updateOn: new Date(), _id: documentId });
+        await this.db.collection(collection).insertOne({ ...document, createdAt: new Date(), updatedAt: new Date(), _id: documentId });
         return this.db.collection(collection).findOne({ _id: documentId });
     }
 
