@@ -54,8 +54,10 @@ class AdonisMongodb {
             return this.db;
         }
         console.log('Connection url', this.url);
-        this.db = await this.Client.connect(this.url, { useNewUrlParser: true }).db(this.dbName);
-        console.log('DEBUG:: DB', this.db);
+        await this.Client.connect(this.url, { useNewUrlParser: true }, (err, db) => {
+            console.log('DEBUG:: DB', db);
+            this.db = db;
+        });
         return this.db;
     }
 
