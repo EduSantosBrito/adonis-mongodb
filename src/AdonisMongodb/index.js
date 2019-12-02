@@ -79,17 +79,19 @@ class AdonisMongodb {
     /**
      * Update a single document
      *
+     * @private
      * @param {String} collection
      * @param {Object} document
      */
     async updateDocument(collection, document) {
-        await this.db.collection(collection).updateOne({ _id: document._id }, { $set: { document, updatedAt: new Date() } });
-        return this.db.collection(collection).findOne({ _id: document._id });
+        await this.db.collection(collection).updateOne({ _id: this.ObjectID(document._id) }, { $set: { document, updatedAt: new Date() } });
+        return this.db.collection(collection).findOne({ _id: this.ObjectID(document._id) });
     }
 
     /**
      * Create a single document
      *
+     * @private
      * @param {String} collection
      * @param {Object} document
      */
@@ -97,6 +99,18 @@ class AdonisMongodb {
         const documentId = new this.ObjectID();
         await this.db.collection(collection).insertOne({ ...document, createdAt: new Date(), updatedAt: new Date(), _id: documentId });
         return this.db.collection(collection).findOne({ _id: documentId });
+    }
+
+    /**
+     * Check if document exists
+     * @private
+     * @param {String} collection
+     * @param {*} _id
+     * @returns {Boolean}
+     */
+    async documentExists(collection, _id) {
+        const document = await this.db.collection(collection).findOne({ _id: this.ObjectID(_id) }, { _id: 1 });
+        return !!document;
     }
 
     /**
@@ -108,7 +122,7 @@ class AdonisMongodb {
     async createOrUpdate(collection, document) {
         if (document._id && !this.ObjectID.isValid(document._id)) {
             throw new Error('Invalid ObjectId');
-        } else if (document._id) {
+        } else if (document._id && this.documentExists(collection, document._id)) {
             return this.updateDocument(collection, document);
         } else {
             return this.createDocument(collection, document);
