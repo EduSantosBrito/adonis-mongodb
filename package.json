@@ -1,6 +1,6 @@
 {
     "name": "adonis-mongodb",
-    "version": "0.4.8",
+    "version": "0.4.9",
     "description": "AdonisJS Provider to use Mongodb",
     "main": "index.js",
     "scripts": {},
