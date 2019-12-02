@@ -84,7 +84,9 @@ class AdonisMongodb {
      * @param {Object} document
      */
     async updateDocument(collection, document) {
-        await this.db.collection(collection).updateOne({ _id: this.ObjectID(document._id) }, { $set: { document, updatedAt: new Date() } });
+        await this.db
+            .collection(collection)
+            .updateOne({ _id: this.ObjectID(document._id) }, { $set: { ...document, updatedAt: new Date() } });
         return this.db.collection(collection).findOne({ _id: this.ObjectID(document._id) });
     }
 
