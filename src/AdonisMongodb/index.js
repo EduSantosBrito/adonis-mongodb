@@ -8,8 +8,9 @@
  * @class AdonisMongodb
  */
 class AdonisMongodb {
-    constructor({ Config, MongoClient }) {
+    constructor({ Config, MongoClient, ObjectID }) {
         this.Config = Config;
+        this.ObjectID = ObjectID;
         this.host = this.Config.get('mongodb.host');
         this.port = this.Config.get('mongodb.port');
         this.username = this.Config.get('mongodb.username');
@@ -73,6 +74,45 @@ class AdonisMongodb {
     close() {
         this.Client.close();
         console.log(`Connection closed successfully.`);
+    }
+
+    /**
+     * Update a single document
+     *
+     * @param {String} collection
+     * @param {Object} document
+     */
+    async updateDocument(collection, document) {
+        await this.db.collection(collection).updateOne({ _id: document._id }, { $set: { document, updateOn: new Date() } });
+        return this.db.collection(collection).findOne({ _id: document._id });
+    }
+
+    /**
+     * Create a single document
+     *
+     * @param {String} collection
+     * @param {Object} document
+     */
+    async createDocument(collection, document) {
+        const documentId = new this.ObjectID();
+        await this.db.collection(collection).insertOne({ ...document, createOn: new Date(), updateOn: new Date(), _id: documentId });
+        return this.db.collection(collection).findOne({ _id: documentId });
+    }
+
+    /**
+     * Create or update a single document
+     *
+     * @param {String} collection
+     * @param {Object} document
+     */
+    async createOrUpdate(collection, document) {
+        if (document._id && !this.ObjectID.isValid(document._id)) {
+            throw new Error('Invalid ObjectId');
+        } else if (document._id) {
+            return this.updateDocument(collection, document);
+        } else {
+            return this.createDocument(collection, document);
+        }
     }
 }
 
