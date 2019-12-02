@@ -16,6 +16,7 @@ class AdonisMongodb {
         this.password = this.Config.get('mongodb.password');
         this.dbName = this.Config.get('mongodb.database');
         this.options = this.Config.get('mongodb.options');
+        console.log('DEBUG:: options', this.options);
         if (this.username && this.password !== null && this.options.authSource) {
             this.url = `mongodb://${this.username}:${this.password}@${this.host}:${this.port}/${this.dbName}?authSource=${this.options.authSource}`;
         }
