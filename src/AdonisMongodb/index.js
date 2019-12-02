@@ -16,7 +16,6 @@ class AdonisMongodb {
         this.password = this.Config.get('mongodb.password');
         this.dbName = this.Config.get('mongodb.database');
         this.options = this.Config.get('mongodb.options');
-        console.log('DEBUG:: options', this.options);
         if (this.username && this.password !== null && this.options.authSource) {
             this.url = `mongodb://${this.username}:${this.password}@${this.host}:${this.port}/${this.dbName}?authSource=${this.options.authSource}`;
         }
@@ -55,13 +54,8 @@ class AdonisMongodb {
             return this.db;
         }
         console.log('Connection url', this.url);
-        await this.Client.connect(this.url, { useNewUrlParser: true }, (err, db) => {
-            if (err) {
-                throw new Error(err);
-            }
-            this.db = db;
-            console.log(`Connected successfully to ${this.host}:${this.port}/${this.dbName}`);
-        });
+        this.db = await this.Client.connect(this.url, { useNewUrlParser: true });
+        console.log('DEBUG:: DB', this.db);
         return this.db;
     }
 
