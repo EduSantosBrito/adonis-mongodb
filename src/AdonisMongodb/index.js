@@ -12,8 +12,19 @@ class AdonisMongodb {
         this.Config = Config;
         this.host = this.Config.get('mongodb.host');
         this.port = this.Config.get('mongodb.port');
-        this.dbName = this.Config.get('mongodb.dbName');
-        this.url = `mongodb://${this.host}:${this.port}`;
+        this.username = this.Config.get('mongodb.username');
+        this.password = this.Config.get('mongodb.password');
+        this.dbName = this.Config.get('mongodb.database');
+        this.options = this.Config.get('mongodb.options');
+        if (this.username && this.password !== null && this.options.authSource) {
+            this.url = `mongodb://${this.username}:${this.password}@${this.host}:${this.port}/${this.dbName}?authSource=${this.options.authSource}`;
+        }
+        if (this.username && this.password !== null && !this.options.authSource) {
+            this.url = `mongodb://${this.username}:${this.password}@${this.host}:${this.port}/${this.dbName}`;
+        }
+        if (!this.username && !this.password) {
+            this.url = `mongodb://${this.host}:${this.port}/${this.dbName}`;
+        }
         this.Client = MongoClient;
     }
 
@@ -42,7 +53,13 @@ class AdonisMongodb {
             console.log('Client is already connected, returning...');
             return this.db;
         }
-        this.db = (await this.Client.connect(this.url, { useNewUrlParser: true })).db(this.dbName);
+        await this.Client.connect(this.url, { useNewUrlParser: true }, (err, db) => {
+            if (err) {
+                throw new Error(err);
+            }
+            this.db = db;
+            console.log(`Connected successfully to ${this.host}:${this.port}/${this.dbName}`);
+        });
         return this.db;
     }
 

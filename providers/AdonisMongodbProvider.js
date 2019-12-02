@@ -3,7 +3,7 @@ const { MongoClient } = require('mongodb');
 
 class AdonisMongodbProvider extends ServiceProvider {
     register() {
-        this.app.singleton('Brito/Mongodb', () => {
+        this.app.singleton('MongoClient', () => {
             const Config = this.app.use('Adonis/Src/Config');
             return new (require('../src/AdonisMongodb'))({ Config, MongoClient });
         });
@@ -11,7 +11,7 @@ class AdonisMongodbProvider extends ServiceProvider {
 
     boot() {
         /** @type {import('../src/AdonisMongodb')} */
-        const Client = this.app.use('Brito/Mongodb');
+        const Client = this.app.use('MongoClient');
         Client.connect();
     }
 }
