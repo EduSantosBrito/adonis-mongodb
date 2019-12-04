@@ -31,11 +31,11 @@ Once done you can access `Database` provider and run mongo queries as follows.
 const MongoClient = use('MongoClient')
 const { ObjectID } = use('mongodb')
 
-await MongoClient.collection('users').find().toArray()
+await MongoClient.db.collection('users').find().toArray()
 
-await MongoClient.collection('users').findOne(_id: ObjectID('5de505539f99ff6318da7292'))
+await MongoClient.db.collection('users').findOne(_id: ObjectID('5de505539f99ff6318da7292'))
 
-await MongoClient.collection('users').aggregate([
+await MongoClient.db.collection('users').aggregate([
     {
         $match: {
             _id: {
@@ -44,4 +44,14 @@ await MongoClient.collection('users').aggregate([
         }
     }
 ]).toArray()
+
+await MongoClient.db.collection('users').insertOne({ name: 'Brito' })
+
+await MongoClient.db.collection('users').deleteOne({ name: 'Brito' })
+
+/** This method will create a document with createAt and updateAt extra fields
+ * If the second parameter has _id as a valid ObjectID, this will update the document that relates with _id and update field updateAt
+ * Otherwise will throw an Error 'Invalid ObjectId'
+ */
+await MongoClient.createOrUpdate('users', { name: 'Brito' })
 ```
