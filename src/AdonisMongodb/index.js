@@ -59,6 +59,7 @@ class AdonisMongodb {
                 throw new Error(err);
             }
             this.db = client.db(this.dbName);
+            this.Client = client;
             console.log(`Connected successfully to ${this.host}:${this.port}/${this.dbName}`);
         });
         return this.db;
