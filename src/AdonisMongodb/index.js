@@ -20,13 +20,7 @@ class AdonisMongodb {
         if (this.username && this.password !== null && this.options.authSource) {
             this.url = `mongodb://${this.username}:${this.password}@${this.host}:${this.port}/${this.dbName}?authSource=${this.options.authSource}`;
         }
-        if (this.username && this.password !== null && this.options.replicaSet) {
-            this.url = `mongodb://${this.username}:${this.password}@${this.host}:${this.port}/${this.dbName}?replicaSet=${this.options.replicaSet}`;
-        }
-        if (this.username && this.password !== null && this.options.replicaSet && this.options.authSource) {
-            this.url = `mongodb://${this.username}:${this.password}@${this.host}:${this.port}/${this.dbName}?authSource=${this.options.authSource}&replicaSet=${this.options.replicaSet}`;
-        }
-        if (this.username && this.password !== null && !this.options.authSource && !this.options.replicaSet) {
+        if (this.username && this.password !== null && !this.options.authSource) {
             this.url = `mongodb://${this.username}:${this.password}@${this.host}:${this.port}/${this.dbName}`;
         }
         if (!this.username && !this.password) {
