@@ -98,7 +98,7 @@ class AdonisMongodb {
      * @param {Object} document
      */
     async createDocument(collection, document) {
-        const documentId = new this.ObjectID();
+        const documentId = document._id || new this.ObjectID();
         await this.db.collection(collection).insertOne({ ...document, createdAt: new Date(), updatedAt: new Date(), _id: documentId });
         return this.db.collection(collection).findOne({ _id: documentId });
     }
