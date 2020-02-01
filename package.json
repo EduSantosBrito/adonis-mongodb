@@ -28,7 +28,7 @@
     "homepage": "https://github.com/EduSantosBrito/adonis-mongodb#readme",
     "dependencies": {},
     "devDependencies": {
-        "mongodb": "^3.3.5",
+        "mongodb": "^3.5.2",
         "@adonisjs/fold": "^4.0.9",
         "eslint": "^6.1.0",
         "eslint-config-airbnb-base": "^14.0.0",
